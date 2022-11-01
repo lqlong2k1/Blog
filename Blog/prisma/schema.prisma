@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Balances {
+  user_id      Int   @id
+  coin         Float @default(0) @db.Float
+  sub_balances Float @default(0) @db.Float
+}
+
+model Blog {
+  blog_id      Int       @id @default(autoincrement())
+  author_id    Int
+  title        String    @db.VarChar(255)
+  content      String    @db.Text
+  image        String?   @db.VarChar(255)
+  category_id  Int
+  total_rate   Int       @default(0)
+  date_created DateTime? @default(now()) @db.Timestamp(0)
+  Users        Users     @relation(fields: [author_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "Blog_ibfk_1")
+  Category     Category  @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "Blog_ibfk_2")
+  Comment      Comment[]
+  Rate         Rate[]
+
+  @@index([author_id], map: "author_id")
+  @@index([category_id], map: "category_id")
+}
+
+model Category {
+  id        Int    @id @default(autoincrement())
+  cate_name String @db.VarChar(50)
+  Blog      Blog[]
+}
+
+model Comment {
+  id           Int           @id @default(autoincrement())
+  user_id      Int
+  blog_id      Int
+  content      String        @db.Text
+  date_created DateTime?     @default(now()) @db.Timestamp(0)
+  total_like   Int?          @default(0)
+  Users        Users         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "Comment_ibfk_1")
+  Blog         Blog          @relation(fields: [blog_id], references: [blog_id], onDelete: Cascade, onUpdate: NoAction, map: "Comment_ibfk_2")
+  LikeComment  LikeComment[]
+
+  @@index([blog_id], map: "blog_id")
+  @@index([user_id], map: "user_id")
+}
+
+model LikeComment {
+  id         Int      @id @default(autoincrement())
+  comment_id Int
+  user_id    Int
+  isLiked    Boolean?
+  Comment    Comment  @relation(fields: [comment_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "LikeComment_ibfk_1")
+  Users      Users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "LikeComment_ibfk_2")
+
+  @@index([comment_id], map: "comment_id")
+  @@index([user_id], map: "user_id")
+}
+
+model Permision {
+  per_id          Int               @id @default(autoincrement())
+  per_name        String            @db.VarChar(50)
+  Permision_Roles Permision_Roles[]
+}
+
+model Permision_Roles {
+  id         Int       @id @default(autoincrement())
+  role_id    Int
+  per_id     Int
+  isLicensed Boolean?  @default(false)
+  Roles      Roles     @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "Permision_Roles_ibfk_1")
+  Permision  Permision @relation(fields: [per_id], references: [per_id], onDelete: Cascade, onUpdate: NoAction, map: "Permision_Roles_ibfk_2")
+
+  @@index([per_id], map: "per_id")
+  @@index([role_id], map: "role_id")
+}
+
+model Rate {
+  rate_id  Int      @id @default(autoincrement())
+  blog_id  Int
+  user_id  Int
+  rating   Int      @default(0)
+  isRating Boolean? @default(false)
+  Blog     Blog     @relation(fields: [blog_id], references: [blog_id], onDelete: Cascade, onUpdate: NoAction, map: "Rate_ibfk_1")
+  Users    Users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "Rate_ibfk_2")
+
+  @@index([blog_id], map: "blog_id")
+  @@index([user_id], map: "user_id")
+}
+
+model Roles {
+  id              Int               @id @default(autoincrement())
+  role_name       String            @db.VarChar(15)
+  Permision_Roles Permision_Roles[]
+  Users           Users[]
+}
+
+model Users {
+  id            Int           @id @default(autoincrement())
+  username      String        @unique(map: "username") @db.VarChar(100)
+  password      String        @db.VarChar(255)
+  full_name     String        @db.VarChar(255)
+  profile_img   String?       @db.VarChar(255)
+  email         String        @unique(map: "email") @db.VarChar(255)
+  phone_number  String        @db.VarChar(15)
+  country       String        @db.VarChar(30)
+  dob           DateTime      @db.Date
+  date_created  DateTime?     @default(now()) @db.Timestamp(0)
+  role_id       Int?          @default(2)
+  refresh_token String?       @db.VarChar(255)
+  Roles         Roles?        @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "Users_ibfk_1")
+  Blog          Blog[]
+  Comment       Comment[]
+  LikeComment   LikeComment[]
+  Rate          Rate[]
+
+  @@index([role_id], map: "role_id")
+}
