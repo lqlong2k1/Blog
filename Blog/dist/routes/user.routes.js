@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const express_validation_1 = require("express-validation");
+const user_validation_1 = __importDefault(require("../validation/user.validation"));
+const user_middleware_1 = __importDefault(require("../middlewares/user.middleware"));
+const admin_middware_1 = __importDefault(require("../middlewares/admin.middware"));
+const user_controller_1 = __importDefault(require("../controllers/user.controller"));
+const router = express_1.default.Router();
+router.get('/', user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, user_controller_1.default.allUsers);
+router.post('/', [(0, express_validation_1.validate)(user_validation_1.default.createUser, { keyByField: true }, {}), user_middleware_1.default.checkDuplicateUsername, user_middleware_1.default.checkDuplicatePhoneNumber, user_middleware_1.default.checkDuplicateEmail], user_controller_1.default.createUser);
+router.post('/login', user_controller_1.default.login);
+router.post('/logout', user_middleware_1.default.authenToken, user_controller_1.default.logout);
+router.get('/:id', user_middleware_1.default.authenToken, user_controller_1.default.getUserById);
+router.put('/:id', user_middleware_1.default.authenToken, user_middleware_1.default.checkUserAuthentication, user_controller_1.default.updateUser);
+router.delete('/:id', user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, user_controller_1.default.removeUserById);
+router.post('/refresh-token', user_middleware_1.default.authenToken, user_controller_1.default.refreshToken);
+exports.default = router;

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as errMessage from '../const/err-messages.const';
 import prisma from '../utils/prisma';
 
-const adminMiddleware = {
+export default {
     checkAdminAuthentication: async (req: any, res: Response, next: NextFunction) => {
         const username = req.decoded.payload.username;
         const data = await prisma.users.findFirst({
@@ -24,4 +24,3 @@ const adminMiddleware = {
     }
 
 }
-export default adminMiddleware;

@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "v16.17.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.ts"
+    "start": "node ./dist/index.js",
+    "postinstall": "tsc"
   },
   "author": "",
   "license": "ISC",
@@ -17,20 +21,21 @@
     "express": "^4.18.2",
     "express-validation": "^4.1.0",
     "mysql": "^2.18.1",
-    "node": "^19.0.0"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/cookie-parser": "^1.4.3",
-    "@types/jsonwebtoken": "^8.5.9",
+    "node": "^19.0.0",
+    "typescript": "^4.8.4",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.20",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "joi": "^17.6.4",
-    "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.20",
     "prisma": "^4.5.0",
     "rand-token": "^1.0.1",
     "ts-node": "^10.9.1",
     "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/jsonwebtoken": "^8.5.9"
   }
 }
