@@ -6,7 +6,7 @@ import adminMiddleware from '../middlewares/admin.middware';
 import userController from '../controllers/user.controller';
 const router = express.Router();
 
-router.get('/', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, userController.allUsers);
+router.get('/', userMiddleware.authenToken, userController.allUsers);
 router.post('/', [validate(userValidation.createUser, { keyByField: true }, {}), userMiddleware.checkDuplicateUsername, userMiddleware.checkDuplicatePhoneNumber, userMiddleware.checkDuplicateEmail], userController.createUser);
 router.post('/login', userController.login);
 router.post('/logout', userMiddleware.authenToken, userController.logout);

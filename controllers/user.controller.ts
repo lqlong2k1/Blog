@@ -128,7 +128,7 @@ const refreshToken = async (req: Request, res: Response) => {
 const logout = async (req: Request, res: Response) => {
     try {
         res.clearCookie('refreshToken');
-        
+
         return res.json({
             method: 'POST',
             status: 'success',
