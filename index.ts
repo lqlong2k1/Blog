@@ -4,17 +4,17 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(cookieParser())
-const PORT = process.env.PORT || 3000;
-
 app.use(
     express.urlencoded({
         extended: true, //body-parser
     }),
 ); //middleware
 app.use(express.json());
+
 route(app);
 
 app.listen(PORT, () => {

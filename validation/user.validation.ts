@@ -48,6 +48,4 @@ export default {
     createUser: {
         body: Joi.object(validationDataInput),
     },
-
-
 }

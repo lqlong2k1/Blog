@@ -1,11 +1,10 @@
 import jwt from 'jsonwebtoken';
 import util from 'util';
 import promisify = util.promisify;
-import { generate } from 'rand-token';
 import prisma from '../utils/prisma';
 
-const sign = promisify(jwt.sign).bind(jwt);
-const verify = promisify(jwt.verify).bind(jwt);
+const asyncSign = promisify(jwt.sign).bind(jwt);
+const asyncVerify = promisify(jwt.verify).bind(jwt);
 
 export async function updateRefreshToken(username: string, refreshToken: string) {
     try {
@@ -23,10 +22,9 @@ export async function updateRefreshToken(username: string, refreshToken: string)
     }
 }
 
-
-export async function generateToken(payload: any, secretSignature: any, tokenLife: string) {
+export async function getToken(payload: any, secretSignature: any, tokenLife: string) {
     try {
-        return await sign({ payload }, secretSignature, {
+        return await asyncSign({ payload }, secretSignature, {
             algorithm: 'HS256',
             expiresIn: tokenLife,
         })
@@ -36,18 +34,9 @@ export async function generateToken(payload: any, secretSignature: any, tokenLif
     }
 }
 
-// export async function verifyToken(token: string, secretKey: string) {
-//     try {
-//         return await verify(token, secretKey);
-//     } catch (error) {
-//         console.log(`Error in verify access token:  + ${error}`);
-//         return null;
-//     }
-// }
-
 export async function decodeToken(token: string, secretKey: string) {
     try {
-        return await verify(token, secretKey, {
+        return await asyncVerify(token, secretKey, {
             ignoreExpiration: true,
         });
     } catch (error) {
@@ -55,4 +44,3 @@ export async function decodeToken(token: string, secretKey: string) {
         return null;
     }
 }
-

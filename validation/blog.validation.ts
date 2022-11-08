@@ -3,10 +3,9 @@ import * as blogConst from '../const/blog.const';
 import * as errMessage from '../const/err-messages.const';
 const validationDataInput = {
     author_id: Joi.number(),
-        // .required(),
     title: Joi.string()
         .required()
-        .messages({ 'string.pattern.base': errMessage.INVALID_TITLE_BLOG}),
+        .messages({ 'string.pattern.base': errMessage.INVALID_TITLE_BLOG }),
     content: Joi.string()
         .required()
         .messages({ 'string.pattern.base': errMessage.INVALID_CONTENT_BLOG }),

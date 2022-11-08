@@ -11,7 +11,6 @@ import prisma from "../utils/prisma";
 dotenv.config();
 
 export async function getAllUsers() {
-
     const users = await prisma.users.findMany();
     return users;
 }
@@ -48,6 +47,7 @@ export async function createUser({ username, password, dob, ...rest }: IUser) {
     })
     return user;
 }
+
 export async function updateUser(id: number, { dob, ...rest }: IUser) {
     const isUser = await prisma.users.findFirst({
         where: {
@@ -57,7 +57,7 @@ export async function updateUser(id: number, { dob, ...rest }: IUser) {
     if (!isUser) {
         return errMessage.NOT_FOUND_USER;
     }
-    const isUpdated = await prisma.users.update({
+    const userUpdated = await prisma.users.update({
         where: {
             id: id
         },
@@ -66,11 +66,12 @@ export async function updateUser(id: number, { dob, ...rest }: IUser) {
             dob: new Date(dob)
         }
     });
-    if (!isUpdated) {
+    if (!userUpdated) {
         errMessage.UPDATE_USER_FAIL;
     }
-    return isUpdated;
+    return userUpdated;
 }
+
 export async function removeUserById(id: number) {
     const user = await prisma.users.findFirst({
         where: {
@@ -108,10 +109,10 @@ export async function login(username: string, password: string) {
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
     const dataForAccessToken = {
-        username: username,
-        password: password
+        username,
+        password
     };
-    const accessToken = await methodAuthentication.generateToken(
+    const accessToken = await methodAuthentication.getToken(
         dataForAccessToken,
         accessTokenSecret,
         accessTokenLife,
@@ -189,7 +190,7 @@ export async function refreshToken(accessToken: string, refreshToken: string) {
         password
     }
 
-    const newAccessToken = await methodAuthentication.generateToken(
+    const newAccessToken = await methodAuthentication.getToken(
         dataForAccessToken,
         accessTokenSecret,
         accessTokenLife
