@@ -108,16 +108,16 @@ function updateUser(id, _a) {
         if (!isUser) {
             return errMessage.NOT_FOUND_USER;
         }
-        const isUpdated = yield prisma_1.default.users.update({
+        const userUpdated = yield prisma_1.default.users.update({
             where: {
                 id: id
             },
             data: Object.assign(Object.assign({}, rest), { dob: new Date(dob) })
         });
-        if (!isUpdated) {
+        if (!userUpdated) {
             errMessage.UPDATE_USER_FAIL;
         }
-        return isUpdated;
+        return userUpdated;
     });
 }
 exports.updateUser = updateUser;
@@ -159,10 +159,10 @@ function login(username, password) {
         const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
         const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
         const dataForAccessToken = {
-            username: username,
-            password: password
+            username,
+            password
         };
-        const accessToken = yield methodAuthentication.generateToken(dataForAccessToken, accessTokenSecret, accessTokenLife);
+        const accessToken = yield methodAuthentication.getToken(dataForAccessToken, accessTokenSecret, accessTokenLife);
         console.log('ACCESS TOKEN: ' + accessToken);
         if (!accessToken) {
             return {
@@ -234,7 +234,7 @@ function refreshToken(accessToken, refreshToken) {
             username,
             password
         };
-        const newAccessToken = yield methodAuthentication.generateToken(dataForAccessToken, accessTokenSecret, accessTokenLife);
+        const newAccessToken = yield methodAuthentication.getToken(dataForAccessToken, accessTokenSecret, accessTokenLife);
         if (!newAccessToken) {
             return {
                 'message': errMessage.CREATE_ACCESS_TOKEN_FAIL

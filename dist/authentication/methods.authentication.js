@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.decodeToken = exports.generateToken = exports.updateRefreshToken = void 0;
+exports.decodeToken = exports.getToken = exports.updateRefreshToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const util_1 = __importDefault(require("util"));
 var promisify = util_1.default.promisify;
 const prisma_1 = __importDefault(require("../utils/prisma"));
-const sign = promisify(jsonwebtoken_1.default.sign).bind(jsonwebtoken_1.default);
-const verify = promisify(jsonwebtoken_1.default.verify).bind(jsonwebtoken_1.default);
+const asyncSign = promisify(jsonwebtoken_1.default.sign).bind(jsonwebtoken_1.default);
+const asyncVerify = promisify(jsonwebtoken_1.default.verify).bind(jsonwebtoken_1.default);
 function updateRefreshToken(username, refreshToken) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -38,10 +38,10 @@ function updateRefreshToken(username, refreshToken) {
     });
 }
 exports.updateRefreshToken = updateRefreshToken;
-function generateToken(payload, secretSignature, tokenLife) {
+function getToken(payload, secretSignature, tokenLife) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            return yield sign({ payload }, secretSignature, {
+            return yield asyncSign({ payload }, secretSignature, {
                 algorithm: 'HS256',
                 expiresIn: tokenLife,
             });
@@ -52,19 +52,11 @@ function generateToken(payload, secretSignature, tokenLife) {
         }
     });
 }
-exports.generateToken = generateToken;
-// export async function verifyToken(token: string, secretKey: string) {
-//     try {
-//         return await verify(token, secretKey);
-//     } catch (error) {
-//         console.log(`Error in verify access token:  + ${error}`);
-//         return null;
-//     }
-// }
+exports.getToken = getToken;
 function decodeToken(token, secretKey) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            return yield verify(token, secretKey, {
+            return yield asyncVerify(token, secretKey, {
                 ignoreExpiration: true,
             });
         }

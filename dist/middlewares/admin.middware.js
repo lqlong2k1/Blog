@@ -37,7 +37,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const errMessage = __importStar(require("../const/err-messages.const"));
 const prisma_1 = __importDefault(require("../utils/prisma"));
-const adminMiddleware = {
+exports.default = {
     checkAdminAuthentication: (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         const username = req.decoded.payload.username;
         const data = yield prisma_1.default.users.findFirst({
@@ -59,4 +59,3 @@ const adminMiddleware = {
         }
     })
 };
-exports.default = adminMiddleware;

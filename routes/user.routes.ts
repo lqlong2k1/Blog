@@ -99,14 +99,145 @@ const router = express.Router();
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Users'
+ *                 $ref: '#/components/schemas/User'
  */
 router.get('/', userMiddleware.authenToken, userController.allUsers);
+
+/**
+ * @swagger
+ * /users/:
+ *   post:
+ *     summary: Create a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *           example:
+ *             username: longlq,
+ *             password: 123456789,
+ *             full_name: Le Quang Long,
+ *             email: lqlong2@gmail.com,
+ *             phone_number: 029 222 1111,
+ *             country: Viet Nam,
+ *             dob: 2001-01-01          
+ *     responses:
+ *       200:
+ *         description: The user was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
 router.post('/', [validate(userValidation.createUser, { keyByField: true }, {}), userMiddleware.checkDuplicateUsername, userMiddleware.checkDuplicatePhoneNumber, userMiddleware.checkDuplicateEmail], userController.createUser);
+
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: User login 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *           example: 
+ *              username: admintrator
+ *              password: 123456789
+ *     responses:
+ *       200:
+ *         description: The user login successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
 router.post('/login', userController.login);
+
 router.post('/logout', userMiddleware.authenToken, userController.logout);
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     summary: Get user information by user ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *     responses:
+ *       200:
+ *         description: Detail user information by user ID
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: The user was not found
+ */
 router.get('/:id', userMiddleware.authenToken, userController.getUserById);
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   put:
+ *     summary: Update user information by user ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The user id
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: Updated successfully
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: The user was not found
+ */
 router.put('/:id', userMiddleware.authenToken, userMiddleware.checkUserAuthentication, userController.updateUser);
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Delete user information by user ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The user id
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Deleted successfully
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: The user was not found
+ */
 router.delete('/:id', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, userController.removeUserById)
 router.post('/refresh-token', userMiddleware.authenToken, userController.refreshToken);
 export default router; 

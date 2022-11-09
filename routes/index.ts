@@ -2,7 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import { ValidationError } from 'express-validation';
 import userRouter from './user.routes';
 import blogRouter from './blog.routes';
+import swaggerRoutes from './swagger.routes';
+
 function route(app: any): void {
+    app.use('/swagger', swaggerRoutes);
     app.use('/users', userRouter);
     app.use('/blogs', blogRouter);
     app.use((err: any, req: Request, res: Response, next: NextFunction) => {

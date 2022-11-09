@@ -31,7 +31,6 @@ const blogConst = __importStar(require("../const/blog.const"));
 const errMessage = __importStar(require("../const/err-messages.const"));
 const validationDataInput = {
     author_id: joi_1.default.number(),
-    // .required(),
     title: joi_1.default.string()
         .required()
         .messages({ 'string.pattern.base': errMessage.INVALID_TITLE_BLOG }),
