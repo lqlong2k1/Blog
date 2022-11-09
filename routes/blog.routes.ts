@@ -69,6 +69,8 @@ const router = express.Router();
  * @swagger
  * /blogs/:
  *   get:
+ *     tags:
+ *       - blog
  *     summary: Get all blogs
  *     responses:
  *       200:
@@ -86,6 +88,8 @@ router.get('/', userMiddleware.authenToken, blogController.getAllBlogs);
  * @swagger
  * /blogs/:
  *   post:
+ *     tags:
+ *       - blog
  *     summary: Create a new post
  *     requestBody:
  *       required: true
@@ -114,6 +118,8 @@ router.post('/', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentic
  * @swagger
  * /blogs/{id}:
  *   put:
+ *     tags:
+ *       - blog
  *     summary: Update post information by post ID
  *     parameters:
  *       - in: path
@@ -144,6 +150,8 @@ router.put('/:id', userMiddleware.authenToken, adminMiddleware.checkAdminAuthent
  * @swagger
  * /blogs/{id}:
  *   get:
+ *     tags:
+ *       - blog
  *     summary: Get post information by post ID
  *     parameters:
  *       - in: path
@@ -169,6 +177,8 @@ router.get('/:id', userMiddleware.authenToken, blogController.getBlogById);
  * @swagger
  * /blogs/{id}:
  *   delete:
+ *     tags:
+ *       - blog
  *     summary: Delete post information by post ID
  *     parameters:
  *       - in: path

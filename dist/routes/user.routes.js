@@ -93,6 +93,8 @@ const router = express_1.default.Router();
  * @swagger
  * /users/:
  *   get:
+ *     tags:
+ *       - user
  *     summary: Get the list of all users
  *     responses:
  *       200:
@@ -109,6 +111,8 @@ router.get('/', user_middleware_1.default.authenToken, user_controller_1.default
  * @swagger
  * /users/:
  *   post:
+ *     tags:
+ *       - user
  *     summary: Create a new user
  *     requestBody:
  *       required: true
@@ -139,6 +143,8 @@ router.post('/', [(0, express_validation_1.validate)(user_validation_1.default.c
  * @swagger
  * /users/login:
  *   post:
+ *     tags:
+ *       - user
  *     summary: User login
  *     requestBody:
  *       required: true
@@ -165,6 +171,8 @@ router.post('/logout', user_middleware_1.default.authenToken, user_controller_1.
  * @swagger
  * /users/{id}:
  *   get:
+ *     tags:
+ *       - user
  *     summary: Get user information by user ID
  *     parameters:
  *       - in: path
@@ -188,6 +196,8 @@ router.get('/:id', user_middleware_1.default.authenToken, user_controller_1.defa
  * @swagger
  * /users/{id}:
  *   put:
+ *     tags:
+ *       - user
  *     summary: Update user information by user ID
  *     parameters:
  *       - in: path
@@ -217,6 +227,8 @@ router.put('/:id', user_middleware_1.default.authenToken, user_middleware_1.defa
  * @swagger
  * /users/{id}:
  *   delete:
+ *     tags:
+ *       - user
  *     summary: Delete user information by user ID
  *     parameters:
  *       - in: path

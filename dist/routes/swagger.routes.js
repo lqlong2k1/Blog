@@ -11,7 +11,7 @@ const swaggerOptions = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "User API",
+            title: "Blog API",
             version: "1.0.0",
             description: "Blog API",
         },
@@ -19,6 +19,15 @@ const swaggerOptions = {
             {
                 url: "http://localhost:8080",
             },
+        ],
+        tags: [{
+                name: "user",
+                description: "Everything about your Pets"
+            },
+            {
+                name: "blog",
+                description: "Everything about your Pets"
+            }
         ],
         components: {
             securitySchemes: {
