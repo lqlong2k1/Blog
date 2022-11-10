@@ -18,11 +18,15 @@ const swaggerOptions = {
             },
         ],
         tags: [{
-            name: "user",
+            name: "Authentication",
+            description: "Everything about authentication"
+        },
+        {
+            name: "User",
             description: "Everything about user"
         },
         {
-            name: "blog",
+            name: "Blog",
             description: "Everything about post in blog"
         }
         ],
@@ -52,4 +56,3 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 router.use('/', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 
 export default router;
-

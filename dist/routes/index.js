@@ -11,6 +11,9 @@ function route(app) {
     app.use('/swagger', swagger_routes_1.default);
     app.use('/users', user_routes_1.default);
     app.use('/blogs', blog_routes_1.default);
+    app.use(function (req, res) {
+        res.status(404).send('{\nERROR: Page not found\n}');
+    });
     app.use((err, req, res, next) => {
         console.log(err);
         if (err instanceof express_validation_1.ValidationError) {

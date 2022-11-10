@@ -21,12 +21,16 @@ const swaggerOptions = {
             },
         ],
         tags: [{
-                name: "user",
-                description: "Everything about your Pets"
+                name: "Authentication",
+                description: "Everything about authentication"
             },
             {
-                name: "blog",
-                description: "Everything about your Pets"
+                name: "User",
+                description: "Everything about user"
+            },
+            {
+                name: "Blog",
+                description: "Everything about post in blog"
             }
         ],
         components: {

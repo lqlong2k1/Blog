@@ -70,7 +70,7 @@ const router = express.Router();
  * /blogs/:
  *   get:
  *     tags:
- *       - blog
+ *       - Blog
  *     summary: Get all blogs
  *     responses:
  *       200:
@@ -89,7 +89,7 @@ router.get('/', userMiddleware.authenToken, blogController.getAllBlogs);
  * /blogs/:
  *   post:
  *     tags:
- *       - blog
+ *       - Blog
  *     summary: Create a new post
  *     requestBody:
  *       required: true
@@ -119,7 +119,7 @@ router.post('/', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentic
  * /blogs/{id}:
  *   put:
  *     tags:
- *       - blog
+ *       - Blog
  *     summary: Update post information by post ID
  *     parameters:
  *       - in: path
@@ -151,7 +151,7 @@ router.put('/:id', userMiddleware.authenToken, adminMiddleware.checkAdminAuthent
  * /blogs/{id}:
  *   get:
  *     tags:
- *       - blog
+ *       - Blog
  *     summary: Get post information by post ID
  *     parameters:
  *       - in: path
@@ -178,7 +178,7 @@ router.get('/:id', userMiddleware.authenToken, blogController.getBlogById);
  * /blogs/{id}:
  *   delete:
  *     tags:
- *       - blog
+ *       - Blog
  *     summary: Delete post information by post ID
  *     parameters:
  *       - in: path

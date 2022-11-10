@@ -91,7 +91,7 @@ const router = express.Router();
  * /users/:
  *   get:
  *     tags: 
- *       - user
+ *       - User
  *     summary: Get the list of all users
  *     responses:
  *       200:
@@ -110,7 +110,7 @@ router.get('/', userMiddleware.authenToken, userController.allUsers);
  * /users/:
  *   post:
  *     tags: 
- *       - user
+ *       - Authentication
  *     summary: Create a new user
  *     requestBody:
  *       required: true
@@ -143,7 +143,7 @@ router.post('/', [validate(userValidation.createUser, { keyByField: true }, {}),
  * /users/login:
  *   post:
  *     tags: 
- *       - user
+ *       - Authentication
  *     summary: User login 
  *     requestBody:
  *       required: true
@@ -173,7 +173,7 @@ router.post('/logout', userMiddleware.authenToken, userController.logout);
  * /users/{id}:
  *   get:
  *     tags: 
- *       - user
+ *       - User
  *     summary: Get user information by user ID
  *     parameters:
  *       - in: path
@@ -199,7 +199,7 @@ router.get('/:id', userMiddleware.authenToken, userController.getUserById);
  * /users/{id}:
  *   put:
  *     tags: 
- *       - user
+ *       - User
  *     summary: Update user information by user ID
  *     parameters:
  *       - in: path
@@ -231,7 +231,7 @@ router.put('/:id', userMiddleware.authenToken, userMiddleware.checkUserAuthentic
  * /users/{id}:
  *   delete:
  *     tags: 
- *       - user
+ *       - User
  *     summary: Delete user information by user ID
  *     parameters:
  *       - in: path
