@@ -19,3 +19,4 @@ app.use(express_1.default.json());
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
 });
+exports.default = app;

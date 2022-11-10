@@ -5,11 +5,10 @@ import blogRouter from './blog.routes';
 import swaggerRoutes from './swagger.routes';
 
 function route(app: any): void {
-
     app.use('/swagger', swaggerRoutes);
     app.use('/users', userRouter);
     app.use('/blogs', blogRouter);
-    app.use(function (req: Request, res: Response) {
+    app.use((req: Request, res: Response) => {
         res.status(404).send('{\nERROR: Page not found\n}');
     });
     app.use((err: any, req: Request, res: Response, next: NextFunction) => {
