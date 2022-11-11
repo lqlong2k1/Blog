@@ -114,7 +114,7 @@ router.get('/', user_middleware_1.default.authenToken, blog_controllers_1.defaul
  *       500:
  *         description: Some server error
  */
-router.post('/', user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, [(0, express_validation_1.validate)(blog_validation_1.default.createBlog, { keyByField: true }, {})], blog_controllers_1.default.createBlog);
+router.post('/', [user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, (0, express_validation_1.validate)(blog_validation_1.default.dataBlog, { keyByField: true }, {})], blog_controllers_1.default.createBlog);
 /**
  * @swagger
  * /blogs/{id}:
@@ -145,7 +145,7 @@ router.post('/', user_middleware_1.default.authenToken, admin_middware_1.default
  *       404:
  *         description: The post was not found
  */
-router.put('/:id', user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, [(0, express_validation_1.validate)(blog_validation_1.default.createBlog, { keyByField: true }, {})], blog_controllers_1.default.updateBlog);
+router.put('/:id', [user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, user_middleware_1.default.checkValidateParams, (0, express_validation_1.validate)(blog_validation_1.default.dataBlog, { keyByField: true }, {})], blog_controllers_1.default.updateBlog);
 /**
  * @swagger
  * /blogs/{id}:
@@ -170,7 +170,7 @@ router.put('/:id', user_middleware_1.default.authenToken, admin_middware_1.defau
  *       404:
  *         description: The post was not found
  */
-router.get('/:id', user_middleware_1.default.authenToken, blog_controllers_1.default.getBlogById);
+router.get('/:id', [user_middleware_1.default.authenToken, user_middleware_1.default.checkValidateParams], blog_controllers_1.default.getBlogById);
 /**
  * @swagger
  * /blogs/{id}:
@@ -195,5 +195,5 @@ router.get('/:id', user_middleware_1.default.authenToken, blog_controllers_1.def
  *       404:
  *         description: The post was not found
  */
-router.delete('/:id', user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, blog_controllers_1.default.removeBlog);
+router.delete('/:id', [user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, user_middleware_1.default.checkValidateParams], blog_controllers_1.default.removeBlog);
 exports.default = router;

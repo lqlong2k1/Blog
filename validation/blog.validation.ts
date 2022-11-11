@@ -19,7 +19,7 @@ const validationDataInput = {
     total_rate: Joi.number(),
 }
 export default {
-    createBlog: {
+    dataBlog: {
         body: Joi.object(validationDataInput),
     },
 

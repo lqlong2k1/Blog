@@ -36,6 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const errMessage = __importStar(require("../const/err-messages.const"));
+const userConst = __importStar(require("../const/user.const"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const prisma_1 = __importDefault(require("../utils/prisma"));
 exports.default = {
@@ -63,6 +64,20 @@ exports.default = {
                 });
                 if (phoneNumber) {
                     throw new Error(errMessage.EXIST_PHONE_NUMBER);
+                }
+                next();
+            }
+            catch (error) {
+                return res.status(400).send({ ERR: error.message });
+            }
+        });
+    },
+    checkValidateParams(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params.id;
+                if (!id.match(userConst.NUMBER_REGEX)) {
+                    throw new Error(errMessage.ID_MUST_BE_NUMBER);
                 }
                 next();
             }

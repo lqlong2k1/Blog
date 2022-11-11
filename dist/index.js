@@ -10,10 +10,12 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
+// middleware
 app.use((0, cookie_parser_1.default)());
+//body-parser
 app.use(express_1.default.urlencoded({
-    extended: true, //body-parser
-})); //middleware
+    extended: true,
+}));
 app.use(express_1.default.json());
 (0, routes_1.default)(app);
 app.listen(PORT, () => {

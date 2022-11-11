@@ -73,6 +73,7 @@ const updateUser = async (req: Request, res: Response) => {
     try {
         const userId = Number(req.params.id)
         const userData = req.body;
+
         const isUpdated = await userServices.updateUser(userId, userData);
         return res.json({
             method: 'PUT',

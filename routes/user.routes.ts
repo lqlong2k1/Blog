@@ -136,37 +136,7 @@ router.get('/', userMiddleware.authenToken, userController.allUsers);
  *       500:
  *         description: Some server error
  */
-router.post('/', [validate(userValidation.createUser, { keyByField: true }, {}), userMiddleware.checkDuplicateUsername, userMiddleware.checkDuplicatePhoneNumber, userMiddleware.checkDuplicateEmail], userController.createUser);
-
-/**
- * @swagger
- * /users/login:
- *   post:
- *     tags: 
- *       - Authentication
- *     summary: User login 
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/User'
- *           example: 
- *              username: admintrator
- *              password: 123456789
- *     responses:
- *       200:
- *         description: The user login successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       500:
- *         description: Some server error
- */
-router.post('/login', userController.login);
-
-router.post('/logout', userMiddleware.authenToken, userController.logout);
+router.post('/', [validate(userValidation.DataUser, { keyByField: true }, {}), userMiddleware.checkDuplicateUsername, userMiddleware.checkDuplicatePhoneNumber, userMiddleware.checkDuplicateEmail], userController.createUser);
 
 /**
  * @swagger
@@ -192,7 +162,7 @@ router.post('/logout', userMiddleware.authenToken, userController.logout);
  *       404:
  *         description: The user was not found
  */
-router.get('/:id', userMiddleware.authenToken, userController.getUserById);
+router.get('/:id', [userMiddleware.authenToken, userMiddleware.checkValidateParams], userController.getUserById);
 
 /**
  * @swagger
@@ -224,7 +194,7 @@ router.get('/:id', userMiddleware.authenToken, userController.getUserById);
  *       404:
  *         description: The user was not found
  */
-router.put('/:id', userMiddleware.authenToken, userMiddleware.checkUserAuthentication, userController.updateUser);
+router.put('/:id', [userMiddleware.authenToken, userMiddleware.checkUserAuthentication, userMiddleware.checkValidateParams, validate(userValidation.DataUser, { keyByField: true }, {})], userController.updateUser);
 
 /**
  * @swagger
@@ -250,6 +220,36 @@ router.put('/:id', userMiddleware.authenToken, userMiddleware.checkUserAuthentic
  *       404:
  *         description: The user was not found
  */
-router.delete('/:id', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, userController.removeUserById)
+router.delete('/:id', [userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, userMiddleware.checkValidateParams], userController.removeUserById)
+
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     tags: 
+ *       - Authentication
+ *     summary: User login 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *           example: 
+ *              username: admintrator
+ *              password: 123456789
+ *     responses:
+ *       200:
+ *         description: The user login successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
+router.post('/login', userController.login);
+
+router.post('/logout', userMiddleware.authenToken, userController.logout);
 router.post('/refresh-token', userMiddleware.authenToken, userController.refreshToken);
 export default router; 

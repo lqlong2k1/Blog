@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as errMessage from '../const/err-messages.const';
+import * as userConst from '../const/user.const';
 import jwt from 'jsonwebtoken';
 import prisma from '../utils/prisma';
 
@@ -31,6 +32,17 @@ export default {
             return res.status(400).send({ ERR: error.message });
         }
 
+    },
+    async checkValidateParams(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.params.id;
+            if (!id.match(userConst.NUMBER_REGEX)) {
+                throw new Error(errMessage.ID_MUST_BE_NUMBER)
+            }
+            next();
+        } catch (error) {
+            return res.status(400).send({ ERR: error.message });
+        }
     },
     async checkDuplicateEmail(req: Request, res: Response, next: NextFunction) {
         try {

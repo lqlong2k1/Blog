@@ -47,7 +47,7 @@ const validationDataInput = {
     total_rate: joi_1.default.number(),
 };
 exports.default = {
-    createBlog: {
+    dataBlog: {
         body: joi_1.default.object(validationDataInput),
     },
 };

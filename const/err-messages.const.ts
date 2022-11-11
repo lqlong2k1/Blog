@@ -1,5 +1,7 @@
 export const INVALID_ID: string = 'Invalid ID user'
 
+export const ID_MUST_BE_NUMBER: string = 'The ID must be a number'
+
 export const INVALID_USERNAME: string = 'Invalid username'
 
 export const MINIMUM_LENGTH_USERNAME: string = 'Minimum username length is 6 characters.'

@@ -15,6 +15,7 @@ function route(app) {
         res.status(404).send('{\nERROR: Page not found\n}');
     });
     app.use((err, req, res, next) => {
+        console.log("🚀 ~ file: index.ts ~ line 15 ~ app.use ~ err", err);
         console.log(err);
         if (err instanceof express_validation_1.ValidationError) {
             console.log(err);

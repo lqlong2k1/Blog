@@ -7,12 +7,14 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+// middleware
 app.use(cookieParser())
+//body-parser
 app.use(
     express.urlencoded({
-        extended: true, //body-parser
+        extended: true,
     }),
-); //middleware
+);
 app.use(express.json());
 
 route(app);

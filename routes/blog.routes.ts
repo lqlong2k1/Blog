@@ -112,7 +112,7 @@ router.get('/', userMiddleware.authenToken, blogController.getAllBlogs);
  *       500:
  *         description: Some server error
  */
-router.post('/', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, [validate(blogValidation.createBlog, { keyByField: true }, {})], blogController.createBlog);
+router.post('/', [userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, validate(blogValidation.dataBlog, { keyByField: true }, {})], blogController.createBlog);
 
 /**
  * @swagger
@@ -144,7 +144,7 @@ router.post('/', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentic
  *       404:
  *         description: The post was not found
  */
-router.put('/:id', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, [validate(blogValidation.createBlog, { keyByField: true }, {})], blogController.updateBlog);
+router.put('/:id', [userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, userMiddleware.checkValidateParams, validate(blogValidation.dataBlog, { keyByField: true }, {})], blogController.updateBlog);
 
 /**
  * @swagger
@@ -170,8 +170,7 @@ router.put('/:id', userMiddleware.authenToken, adminMiddleware.checkAdminAuthent
  *       404:
  *         description: The post was not found
  */
-router.get('/:id', userMiddleware.authenToken, blogController.getBlogById);
-
+router.get('/:id', [userMiddleware.authenToken, userMiddleware.checkValidateParams], blogController.getBlogById);
 
 /**
  * @swagger
@@ -197,5 +196,5 @@ router.get('/:id', userMiddleware.authenToken, blogController.getBlogById);
  *       404:
  *         description: The post was not found
  */
-router.delete('/:id', userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, blogController.removeBlog);
+router.delete('/:id', [userMiddleware.authenToken, adminMiddleware.checkAdminAuthentication, userMiddleware.checkValidateParams], blogController.removeBlog);
 export default router; 

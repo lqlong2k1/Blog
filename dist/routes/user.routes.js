@@ -138,35 +138,7 @@ router.get('/', user_middleware_1.default.authenToken, user_controller_1.default
  *       500:
  *         description: Some server error
  */
-router.post('/', [(0, express_validation_1.validate)(user_validation_1.default.createUser, { keyByField: true }, {}), user_middleware_1.default.checkDuplicateUsername, user_middleware_1.default.checkDuplicatePhoneNumber, user_middleware_1.default.checkDuplicateEmail], user_controller_1.default.createUser);
-/**
- * @swagger
- * /users/login:
- *   post:
- *     tags:
- *       - Authentication
- *     summary: User login
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/User'
- *           example:
- *              username: admintrator
- *              password: 123456789
- *     responses:
- *       200:
- *         description: The user login successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       500:
- *         description: Some server error
- */
-router.post('/login', user_controller_1.default.login);
-router.post('/logout', user_middleware_1.default.authenToken, user_controller_1.default.logout);
+router.post('/', [(0, express_validation_1.validate)(user_validation_1.default.DataUser, { keyByField: true }, {}), user_middleware_1.default.checkDuplicateUsername, user_middleware_1.default.checkDuplicatePhoneNumber, user_middleware_1.default.checkDuplicateEmail], user_controller_1.default.createUser);
 /**
  * @swagger
  * /users/{id}:
@@ -191,7 +163,7 @@ router.post('/logout', user_middleware_1.default.authenToken, user_controller_1.
  *       404:
  *         description: The user was not found
  */
-router.get('/:id', user_middleware_1.default.authenToken, user_controller_1.default.getUserById);
+router.get('/:id', [user_middleware_1.default.authenToken, user_middleware_1.default.checkValidateParams], user_controller_1.default.getUserById);
 /**
  * @swagger
  * /users/{id}:
@@ -222,7 +194,7 @@ router.get('/:id', user_middleware_1.default.authenToken, user_controller_1.defa
  *       404:
  *         description: The user was not found
  */
-router.put('/:id', user_middleware_1.default.authenToken, user_middleware_1.default.checkUserAuthentication, user_controller_1.default.updateUser);
+router.put('/:id', [user_middleware_1.default.authenToken, user_middleware_1.default.checkUserAuthentication, user_middleware_1.default.checkValidateParams, (0, express_validation_1.validate)(user_validation_1.default.DataUser, { keyByField: true }, {})], user_controller_1.default.updateUser);
 /**
  * @swagger
  * /users/{id}:
@@ -247,6 +219,34 @@ router.put('/:id', user_middleware_1.default.authenToken, user_middleware_1.defa
  *       404:
  *         description: The user was not found
  */
-router.delete('/:id', user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, user_controller_1.default.removeUserById);
+router.delete('/:id', [user_middleware_1.default.authenToken, admin_middware_1.default.checkAdminAuthentication, user_middleware_1.default.checkValidateParams], user_controller_1.default.removeUserById);
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     summary: User login
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *           example:
+ *              username: admintrator
+ *              password: 123456789
+ *     responses:
+ *       200:
+ *         description: The user login successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
+router.post('/login', user_controller_1.default.login);
+router.post('/logout', user_middleware_1.default.authenToken, user_controller_1.default.logout);
 router.post('/refresh-token', user_middleware_1.default.authenToken, user_controller_1.default.refreshToken);
 exports.default = router;

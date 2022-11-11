@@ -47,7 +47,7 @@ function getToken(payload, secretSignature, tokenLife) {
             });
         }
         catch (error) {
-            console.log(`Error in generate access token:  + ${error}`);
+            console.log(`Error in get access token:  + ${error}`);
             return null;
         }
     });

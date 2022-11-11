@@ -10,7 +10,7 @@ const validationDataInput = {
     password: Joi.string()
         .min(8)
         .required()
-        .messages({ 'string.pattern.base': errMessage.INVALID_PASSWORD }),
+        .messages({ 'string.min': errMessage.INVALID_PASSWORD }),
     full_name: Joi.string()
         .trim()
         .regex(userConst.NAME_REGEX)
@@ -33,7 +33,7 @@ const validationDataInput = {
     country: Joi.string()
         .trim()
         .required()
-        .messages({ 'string.parttern.base': errMessage.INVALID_COUNTRY }),
+        .messages({ 'string.base': errMessage.INVALID_COUNTRY }),
     dob: Joi.date()
         .max('01-01-2004')
         .iso()
@@ -45,7 +45,7 @@ const validationDataInput = {
     roles: Joi.number()
 }
 export default {
-    createUser: {
+    DataUser: {
         body: Joi.object(validationDataInput),
     },
 }

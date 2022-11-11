@@ -29,7 +29,7 @@ export async function getToken(payload: any, secretSignature: any, tokenLife: st
             expiresIn: tokenLife,
         })
     } catch (error) {
-        console.log(`Error in generate access token:  + ${error}`);
+        console.log(`Error in get access token:  + ${error}`);
         return null;
     }
 }
