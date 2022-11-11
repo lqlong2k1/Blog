@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import * as userConst from '../const/user.const';
 import * as errMessage from '../const/err-messages.const';
-const validationDataInput = {
+const validateDataInput = {
     username: Joi.string()
         .min(6).messages({ 'string.min': errMessage.MINIMUM_LENGTH_USERNAME })
         .regex(userConst.USERNAME_REGEX)
@@ -44,8 +44,22 @@ const validationDataInput = {
         }),
     roles: Joi.number()
 }
+const validateDataLogin = {
+    username: Joi.string()
+        .min(6).messages({ 'string.min': errMessage.MINIMUM_LENGTH_USERNAME })
+        .regex(userConst.USERNAME_REGEX)
+        .required()
+        .messages({ 'string.pattern.base': errMessage.INVALID_USERNAME }),
+    password: Joi.string()
+        .min(8)
+        .required()
+        .messages({ 'string.min': errMessage.INVALID_PASSWORD }),
+}
 export default {
     DataUser: {
-        body: Joi.object(validationDataInput),
+        body: Joi.object(validateDataInput),
     },
+    DataLogin: {
+        body: Joi.object(validateDataLogin)
+    }
 }

@@ -234,8 +234,8 @@ router.delete('/:id', [user_middleware_1.default.authenToken, admin_middware_1.d
  *           schema:
  *             $ref: '#/components/schemas/User'
  *           example:
- *              username: admintrator
- *              password: 123456789
+ *              username: "admintrator"
+ *              password: "123456789"
  *     responses:
  *       200:
  *         description: The user login successfully
@@ -246,7 +246,24 @@ router.delete('/:id', [user_middleware_1.default.authenToken, admin_middware_1.d
  *       500:
  *         description: Some server error
  */
-router.post('/login', user_controller_1.default.login);
+router.post('/login', (0, express_validation_1.validate)(user_validation_1.default.DataLogin, { keyByField: true }, {}), user_controller_1.default.login);
 router.post('/logout', user_middleware_1.default.authenToken, user_controller_1.default.logout);
+/**
+ * @swagger
+ * /users/refresh-token:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     summary: Refresh your access-token
+ *     responses:
+ *       200:
+ *         description: refresh token was successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Some server error
+ */
 router.post('/refresh-token', user_middleware_1.default.authenToken, user_controller_1.default.refreshToken);
 exports.default = router;

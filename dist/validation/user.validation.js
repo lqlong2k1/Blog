@@ -29,7 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const joi_1 = __importDefault(require("joi"));
 const userConst = __importStar(require("../const/user.const"));
 const errMessage = __importStar(require("../const/err-messages.const"));
-const validationDataInput = {
+const validateDataInput = {
     username: joi_1.default.string()
         .min(6).messages({ 'string.min': errMessage.MINIMUM_LENGTH_USERNAME })
         .regex(userConst.USERNAME_REGEX)
@@ -72,8 +72,22 @@ const validationDataInput = {
     }),
     roles: joi_1.default.number()
 };
+const validateDataLogin = {
+    username: joi_1.default.string()
+        .min(6).messages({ 'string.min': errMessage.MINIMUM_LENGTH_USERNAME })
+        .regex(userConst.USERNAME_REGEX)
+        .required()
+        .messages({ 'string.pattern.base': errMessage.INVALID_USERNAME }),
+    password: joi_1.default.string()
+        .min(8)
+        .required()
+        .messages({ 'string.min': errMessage.INVALID_PASSWORD }),
+};
 exports.default = {
     DataUser: {
-        body: joi_1.default.object(validationDataInput),
+        body: joi_1.default.object(validateDataInput),
     },
+    DataLogin: {
+        body: joi_1.default.object(validateDataLogin)
+    }
 };
