@@ -68,7 +68,7 @@ exports.default = {
                 next();
             }
             catch (error) {
-                return res.status(400).send({ ERR: error.message });
+                return res.status(400).send({ ERROR: error.message });
             }
         });
     },
@@ -82,7 +82,7 @@ exports.default = {
                 next();
             }
             catch (error) {
-                return res.status(400).send({ ERR: error.message });
+                return res.status(400).send({ ERROR: error.message });
             }
         });
     },
@@ -98,7 +98,7 @@ exports.default = {
                 next();
             }
             catch (error) {
-                return res.status(400).send({ ERR: error.message });
+                return res.status(400).send({ ERROR: error.message });
             }
         });
     },
@@ -135,7 +135,7 @@ exports.default = {
             next();
         }
         else {
-            return res.json({ message: errMessage.NOT_PERMISSION });
+            return res.json({ ERROR: errMessage.NOT_PERMISSION });
         }
     })
 };

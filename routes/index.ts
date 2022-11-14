@@ -9,17 +9,19 @@ function route(app: any): void {
     app.use('/users', userRouter);
     app.use('/blogs', blogRouter);
     app.use((req: Request, res: Response) => {
-        res.status(404).send('{\nERROR: Page not found\n}');
+        res.status(404).send({
+            'Message': 'ERROR: Page not found'
+        });
     });
     app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-        console.log("🚀 ~ file: index.ts ~ line 15 ~ app.use ~ err", err)
         console.log(err);
         if (err instanceof ValidationError) {
             console.log(err);
             res.status(400).send(err.details[0]);
         }
-        // res.status(500).send('Something broken');
-        res.status(err.statusCode).send('{\nERROR: Something has broken\n}');
+        res.status(err.statusCode).send({
+            'Message': 'ERROR: Something has broken'
+        });
     })
 }
 

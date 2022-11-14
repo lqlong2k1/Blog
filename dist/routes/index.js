@@ -12,17 +12,19 @@ function route(app) {
     app.use('/users', user_routes_1.default);
     app.use('/blogs', blog_routes_1.default);
     app.use((req, res) => {
-        res.status(404).send('{\nERROR: Page not found\n}');
+        res.status(404).send({
+            'Message': 'ERROR: Page not found'
+        });
     });
     app.use((err, req, res, next) => {
-        console.log("🚀 ~ file: index.ts ~ line 15 ~ app.use ~ err", err);
         console.log(err);
         if (err instanceof express_validation_1.ValidationError) {
             console.log(err);
             res.status(400).send(err.details[0]);
         }
-        // res.status(500).send('Something broken');
-        res.status(err.statusCode).send('{\nERROR: Something has broken\n}');
+        res.status(err.statusCode).send({
+            'Message': 'ERROR: Something has broken'
+        });
     });
 }
 exports.default = route;

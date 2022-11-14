@@ -29,7 +29,7 @@ export default {
             }
             next();
         } catch (error) {
-            return res.status(400).send({ ERR: error.message });
+            return res.status(400).send({ ERROR: error.message });
         }
 
     },
@@ -41,7 +41,7 @@ export default {
             }
             next();
         } catch (error) {
-            return res.status(400).send({ ERR: error.message });
+            return res.status(400).send({ ERROR: error.message });
         }
     },
     async checkDuplicateEmail(req: Request, res: Response, next: NextFunction) {
@@ -54,7 +54,7 @@ export default {
             }
             next();
         } catch (error) {
-            return res.status(400).send({ ERR: error.message });
+            return res.status(400).send({ ERROR: error.message });
         }
     },
 
@@ -90,7 +90,7 @@ export default {
             req.user = data;
             next();
         } else {
-            return res.json({ message: errMessage.NOT_PERMISSION });
+            return res.json({ ERROR: errMessage.NOT_PERMISSION });
         }
     }
 }
