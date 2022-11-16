@@ -106,7 +106,8 @@ const router = express_1.default.Router();
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get('/', user_middleware_1.default.authenToken, user_controller_1.default.allUsers);
+// router.get('/', userMiddleware.authenToken, userController.allUsers);
+router.get('/', user_controller_1.default.allUsers);
 /**
  * @swagger
  * /users/:

@@ -103,7 +103,8 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get('/', userMiddleware.authenToken, userController.allUsers);
+// router.get('/', userMiddleware.authenToken, userController.allUsers);
+router.get('/', userController.allUsers);
 
 /**
  * @swagger

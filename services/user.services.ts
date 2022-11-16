@@ -6,7 +6,7 @@ import * as methodAuthentication from '../authentication/methods.authentication'
 import randToken from 'rand-token';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import prisma from "../utils/prisma";
+import prisma from '../utils/prisma';
 
 dotenv.config();
 
